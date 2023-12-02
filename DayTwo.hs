@@ -16,7 +16,6 @@ readColor :: String -> Color
 readColor "red" = Red
 readColor "blue" = Blue
 readColor "green" = Green
-readColor s = error $ "topkek" ++s
 
 main :: IO ()
 main = do
