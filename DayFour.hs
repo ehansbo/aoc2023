@@ -15,13 +15,10 @@ main = do
     print $ solve2 (zip input (repeat 1))
 
 solve2 :: [(Card, Int)] -> Int
-solve2 xs =
-    let numberOfCards = solve2' xs
-        solve2' ((c, i):xs) =
-            let winners = winningNumbers c
-            in (c, i) : solve2' (map (\(c', i') -> (c', i' + i)) (take winners xs) ++ drop winners xs)
-        solve2' _ = []
-    in sum $ map snd $ numberOfCards
+solve2 ((c, i):xs) =
+    let (change, noChange) = splitAt (winningNumbers c) xs
+    in i + solve2 (map (\(c', i') -> (c', i' + i)) change ++ noChange)
+solve2 _ = 0 
 
 winningNumbers :: Card -> Int
 winningNumbers c = S.size $ S.intersection (cards c) (winners c)
@@ -30,7 +27,7 @@ solve1 :: [Card] -> Int
 solve1 (c:cs) = 
     let rest = solve1 cs
         winners = winningNumbers c
-    in if winners == 0 then 0 + rest else 2^(winners-1) + rest
+    in  2^winners `div` 2 + rest
 solve1 _ = 0
 
 parseCard :: String -> Card
