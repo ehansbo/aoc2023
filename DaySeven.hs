@@ -35,7 +35,7 @@ score2 hand = 14^6 * (maximum $ map typScore (getPermutations hand)) +  (sum $ m
 
 getPermutations :: [Card] -> [[Card]]
 getPermutations cs = map getPermutations' (filter (/= 'J') cards)
-    where getPermutations' c = replace c cs
+    where getPermutations' c = map (\c' -> if c' == 'J' then c else c') cs
 
 replace :: Card -> [Card] -> [Card]
 replace c (x:xs)
