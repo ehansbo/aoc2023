@@ -37,12 +37,6 @@ getPermutations :: [Card] -> [[Card]]
 getPermutations cs = map getPermutations' (filter (/= 'J') cards)
     where getPermutations' c = map (\c' -> if c' == 'J' then c else c') cs
 
-replace :: Card -> [Card] -> [Card]
-replace c (x:xs)
-    | x == 'J' = c:(replace c xs)
-    | otherwise = x:(replace c xs)
-replace _ [] = []
-
 typScore :: [Card] -> Int
 typScore cs =
     let grouped = sortBy (\e1 e2 -> compare (length e2) (length e1)) $ group $ sort cs
